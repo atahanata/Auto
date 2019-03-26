@@ -1,6 +1,8 @@
-# AutomataWorks
-<a href="https://atahanata.github.io/AutomataWorks" link="black" alink="green" vlink="red">AutomataWorks</a>
+<h1>
+<a href="https://atahanata.github.io/AutomataWorks/">AutomataWorks</a>  
+</h1>
 
+AutomataWorks
 
 1-)[CW2](https://atahanata.github.io/AutomataWorks/DFA1.html)
 
