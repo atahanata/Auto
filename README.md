@@ -1,6 +1,4 @@
-<h1>
-<a href="https://atahanata.github.io/AutomataWorks/">AutomataWorks</a>  
-</h1>
+
 
 AutomataWorks
 
