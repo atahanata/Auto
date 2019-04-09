@@ -9,3 +9,5 @@ AutomataWorks
 3-)[HW1](https://atahanata.github.io/AutomataWorks/RegExpHW.html)
 
 4-)[CW4](https://atahanata.github.io/AutomataWorks/CFG1.html)
+
+5-)[CW5](https://atahanata.github.io/AutomataWorks/CW5/Expression.html)
