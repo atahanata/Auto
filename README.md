@@ -11,3 +11,5 @@ AutomataWorks
 4-)[CW4](https://atahanata.github.io/AutomataWorks/CFG1.html)
 
 5-)[CW5](https://atahanata.github.io/AutomataWorks/CW5/Expression.html)
+
+6-)[CW7](https://atahanata.github.io/AutomataWorks/microJ/microJ3.html)
