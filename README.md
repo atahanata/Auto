@@ -16,4 +16,4 @@ AutomataWorks
 
 Term Project
 
-(https://atahanata.github.io/AutomataWorks/convert_nfa_dfa.htm)
+[Term Project](https://atahanata.github.io/AutomataWorks/convert_nfa_dfa.htm)
