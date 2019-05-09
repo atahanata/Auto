@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<title>Convert NFA to DFA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<link rel="stylesheet" href="site_style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+  .custom-select {
+    position: relative;
+    font-family: Arial;
+  }
+
+  .custom-select select {
+    display: none;
+    /*hide original SELECT element:*/
+  }
+
+
+  /*style the arrow inside the select element:*/
+  .select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
+
+  /*point the arrow upwards when the select box is open (active):*/
+  .select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+  }
+
+  /*style the items (options), including the selected item:*/
+  .select-items div,
+  .select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    user-select: none;
+  }
+
+
+ 
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Arimo-Helvetica"
+  }
+
+  .w3-row-padding img {
+    margin-bottom: 12px
+  }
+
+  /* Set the width of the sidebar to 120px */
+  .w3-sidebar {
+    width: 120px;
+    background: aquamarine;
+  }
+
+  /* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
+  #main {
+    margin-left: 120px
+  }
+
+  /* Remove margins from "page content" on small screens */
+  @media only screen and (max-width: 600px) {
+    #main {
+      margin-left: 0
+    }
+  }
+
+
+
+
+
+  /* Option Select*/
+  
+  /* -------------------- Rounded Corners */
+  .rounded {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+  }
+
+  .semi-square {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  /* -------------------- Colors: Background */
+  .slate {
+    background-color: #ddd;
+  }
+
+  .green {
+    background-color: #779126;
+  }
+
+  .blue {
+    background-color: #3b8ec2;
+  }
+
+  .yellow {
+    background-color: #eec111;
+  }
+
+  .black {
+    background-color: #000;
+  }
+
+  /* -------------------- Colors: Text */
+  .slate select {
+    color: #000;
+  }
+
+  .green select {
+    color: #fff;
+  }
+
+  .blue select {
+    color: #fff;
+  }
+
+  .yellow select {
+    color: #000;
+  }
+
+  .black select {
+    color: #fff;
+  }
+
+  .MediumBlue select{
+    color: #0000CD;
+  }
+
+
+  
+
+</style>
+
+<body class="w3-white">
+
+  <!-- Page Content -->
+  <div>
+    <!-- Header/Home -->
+    <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
+      <h3 class="w3-jumbo"><span class="w3-hide-small">CONVERT NFA to DFA</span></h3>
+
+    </header>
+
+    <!-- About Section -->
+    <div class="w3-content w3-justify w3-text-black w3-padding-64" style="padding:10px;" id="FA">
+      <h2 id="fafa" class="w3-text-light-black">Definition of Finite Automata</h2>
+      <hr>
+      <p>A finite automaton (FA) is a simple idealized machine used to recognize patterns within input taken from some character set (or alphabet) C. The job of an FA is to accept or reject an input depending on whether the pattern defined by the FA occurs in the input.
+
+        A finite automaton consists of:
+        
+        a finite set S of N states
+        a special start state
+        a set of final (or accepting) states
+        a set of transitions T from one state to another, labeled with chars in C
+        As noted above, we can represent a FA graphically, with nodes for states, and arcs for transitions.
+        
+        We execute our FA on an input sequence as follows:
+        
+        Begin in the start state
+        If the next input char matches the label on a transition from the current state to a new state, go to that new state
+        Continue making transitions on each input char
+        If no move is possible, then stop
+        If in accepting state, then accept.</p>
+        <p>A finite automata consist of the following:</p>
+        <fieldset style="max-width:max-content;">
+            
+          <p>{ Q, ∑, q, F, δ }</p>
+          <p>Q : Finite set of states.</p>
+          <p>∑ : set of Input Symbols.</p>
+          <p>q : Initial state.</p>
+          <p>F : set of Final States.</p>
+          <p>δ : Transition Function.</p>
+        
+        </fieldset>
+
+      
+    </div>
+    <div class="w3-content w3-justify w3-text-black w3-padding-64" style="padding:20px;" id="DFA">
+      <h2 id="dfadfa" class="w3-text-light-black">Deterministic Finite Automata (DFA)</h2>
+      <hr>
+      <p>In a DFA, for a particular input character, the machine goes to one state only.
+        A transition function is defined on every state for every input symbol.
+        Also in DFA null (or ε) move is not allowed, i.e.,
+        DFA cannot change state without any input character.
+        <p>For example, below DFA with ∑ = {0, 1} accepts all strings ending with 0.</p>
+        <img src="Finite_automata_introduction_1.jpg" alt="Introduction DFA-1">
+        <p>DFA consists of 5 tuples {Q, ∑, q, F, δ}.</p>
+        <fieldset style="max-width:max-content;">
+          <p>Q : set of all states.</p>
+          <p>∑ : set of input symbols. (Symbols which machine takes as input)</p>
+          <p>q : Initial state. ( Starting state of a machine )</p>
+          <p>F : set of final state.</p>
+          <p>δ : Transition Function, defined as δ : Q X ∑ --> Q.</p>
+        </fieldset>
+
+      </p>
+    </div>
+
+
+
+    <div class="w3-content w3-justify w3-text-black w3-padding-64" style="padding:20px;" id="NFA">
+      <h2 id="nfanfa" class="w3-text-light-black">Nondeterministic Finite Automata (NFA)</h2>
+      <hr>
+      <p>NFA is similar to DFA except following additional features:
+        <p>1. Null (or ε) move is allowed i.e., it can move forward without reading symbols.</p>
+        <p>2. Ability to transmit to any number of states for a particular input.</p>
+        However, these above features don’t add any power to NFA. If we compare both in terms of power,
+        both are equivalent.
+        Due to above additional features, NFA has a different transition function,
+        rest is same as DFA.
+        <p>δ: Transition Function</p>
+        <p>δ: Q X (∑ U ϵ ) --> 2 ^ Q.</p>
+      </p>
+    </div>
+  </div>
+<center>
+
+
+
+
+</center>
+
+<div class="w3-content w3-justify w3-text-black w3-padding-64" style="padding:20px;" id="NFATODFA">
+  <h2 id="nf" class="w3-text-light-black">Convert NFA to DFA</h2>
+  <hr>
+  <p>Suppose there is an NFA N < Q, ∑, q0, δ, F > which recognizes a language L. Then the DFA D < Q’, ∑, q0, δ’, F’ > can be constructed for language L as:
+    <p>Step 1: Initially Q’ = ɸ.</p>
+    <p>Step 2: Add q0 to Q’.</p>
+    <p>Step 3: For each state in Q’, find the possible set of states for each input symbol using transition function of NFA. If this set of states is not in Q’, add it to Q’.</p>
+    <p>Step 4: Final state of DFA will be all states with contain F (final states of NFA)</p>
+  </p>
+</div>
+
+<div class="w3-content w3-justify w3-text-black w3-padding-64" style="padding:20px;" id="example1">
+  <h2 id="ex" class="w3-text-light-black">Example</h2>
+  <hr>
+  <p>Consider the following NFA shown in Figure 1.</p>
+  <img src="nfatofdfa_1.png" alt="Örnek Resim"/>
+  <p>Following are the various parameters for NFA.
+    Q = { q0, q1, q2 }
+    ∑ = ( a, b )
+    F = { q2 }
+     δ (Transition Function of NFA)</p>
+    <img src="nfatofdfa_table1.png" alt="tablo1">
+
+    <p>Step 1: Q’ = ɸ
+      Step 2: Q’ = {q0}
+      Step 3: For each state in Q’, find the states for each input symbol.
+      Currently, state in Q’ is q0, find moves from q0 on input symbol a and b using transition function of NFA and update the transition table of DFA.
+      
+      δ’ (Transition Function of DFA)</p>
+
+      <img src="nfatofdfa_table2.png" alt="tablo2">
+
+      <p>Now { q0, q1 } will be considered as a single state. As its entry is not in Q’, add it to Q’.
+        So Q’ = { q0, { q0, q1 } }
+      </p>
+
+      <p>Now, moves from state { q0, q1 } on different input symbols are not present in transition table of DFA, we will calculate it like:
+        δ’ ( { q0, q1 }, a ) = δ ( q0, a ) ∪ δ ( q1, a ) = { q0, q1 }
+        δ’ ( { q0, q1 }, b ) = δ ( q0, b ) ∪ δ ( q1, b ) = { q0, q2 }
+        Now we will update the transition table of DFA.</p>
+
+        <p>δ’ (Transition Function of DFA)</p>
+
+        <img src="nfatofdfa_table3.png" alt="tablo3">
+
+        <p>Now { q0, q2 } will be considered as a single state. As its entry is not in Q’, add it to Q’.</p>
+        <p>So Q’ = { q0, { q0, q1 }, { q0, q2 } }</p>
+        <p>Now, moves from state {q0, q2} on different input symbols are not present in transition table of DFA, we will calculate it like:
+          δ’ ( { q0, q2 }, a ) = δ ( q0, a ) ∪ δ ( q2, a ) = { q0, q1 }
+          δ’ ( { q0, q2 }, b ) = δ ( q0, b ) ∪ δ ( q2, b ) = { q0 }
+          Now we will update the transition table of DFA.</p>
+          <p>δ’ (Transition Function of DFA)</p>
+          <img src="nfatofdfa_table4.png" alt="tablo4">
+
+          <p>As there is no new state generated, we are done with the conversion. Final state of DFA will be state which has q2 as its component i.e., { q0, q2 }</p>
+
+          <p>Following are the various parameters for DFA.</p>
+          <p>Q’ = { q0, { q0, q1 }, { q0, q2 } }
+            ∑ = ( a, b )
+            F = { { q0, q2 } } and transition function δ’ as shown above. The final DFA for above NFA has been shown in Figure 2.</p>
+
+            <img src="nfatofdfa_Figure2.png" alt="figure2">
+
+            <p>Note : Sometimes, it is not easy to convert regular expression to DFA. First you can convert regular expression to NFA and then NFA to DFA.</p>
+
+            <p>Question : The number of states in the minimal deterministic finite automaton corresponding to the regular expression (0 + 1)* (10) is ____________.
+              Solution : First, we will make an NFA for the above expression. To make an NFA for (0 + 1)*, NFA will be in same state q0 on input symbol 0 or 1. Then for concatenation, we will add two moves (q0 to q1 for 1 and q1 to q2 for 0) as shown in Figure 3.</p>
+              
+              <img src="nfatofdfa_Figure3.png" alt="figure3">
+              <br>
+              <br>
+              <img src="nfatofdfa_table5.png" alt="tablo5">
+              <br>
+              <br>
+
+              <img src="nfatofdfa_Figure4.png" alt="figure4">
+        
+            </div>
+  </script>
+
+</body>
+
+</html>
