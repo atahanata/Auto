@@ -29,4 +29,4 @@ HomeWorks
 
 Term Project
 
-[Term Project - Conversions NFA to DFA](https://atahanata.github.io/Auto/AutomataProject/index.html)
+[Term Project - Conversion NFA to DFA](https://atahanata.github.io/Auto/AutomataProject/index.html)
