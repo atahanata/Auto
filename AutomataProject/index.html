@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<title>Convert NFA to DFA</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="w3.css">
@@ -159,7 +158,7 @@
   <div>
     <!-- Header/Home -->
     <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
-      <h3 class="w3-jumbo"><span class="w3-hide-small">CONVERT NFA to DFA</span></h3>
+      <h3 class="w3-jumbo"><span class="w3-hide-small">CONVERSİON NFA to DFA</span></h3>
 
     </header>
 
@@ -217,8 +216,94 @@
         </fieldset>
 
       </p>
-    </div>
+    
+    <div class="w3-content w3-justify w3-text-black w3-padding-64" style="padding:20px;" id="DFAa">
 
+      <p>DFA for (1|0)*11 </p>
+
+<script>
+"use strict";
+function delta(q, c) { // (1|0)*10
+    if (q=='A' && c=='1') return 'B'
+    if (q=='B' && c=='1') return 'C'
+    if (q=='C' && c=='1') return 'C' 
+    if (c=='0') return 'A'
+    return '';  //default -- no transition
+}
+function accept(w, F='C', q='A') {
+    //w: input String
+    //F: final state(s)
+    //q: current state
+    let i = 0, txt = q
+    while (i < w.length) {
+        q = delta(q, w[i])
+        if (q == '') break
+        i++; txt += " -> "+q
+    }
+    input.selectionStart = i
+    input.selectionEnd = i+1
+    let a = (q!='' && F.includes(q))
+    return txt+'  '+(a? "Accept" : "Reject")
+}
+function test() {
+    let w = input.value, s = "  "
+    for (let c of w) s += c+"    "
+    s += '\n'+accept(w, final.value)
+    console.log(s); out.innerHTML = s
+}
+</script>
+
+
+
+<h6 id=title></h6>
+
+<p>Deterministic finite automaton test program</p>
+
+w = <input id=input type=text value=01001010
+  onChange="test()"> &emsp;
+F = <input id=final type=text value=C
+  onChange="test()" style="width:30px">
+
+<pre id=out></pre>
+
+<hr />
+<b>Logic</b>
+
+<style>
+    table { 
+        border-collapse: collapse; 
+        margin: 0 50px; 
+    }
+    th { 
+        color: blue; 
+        padding: 5px 12px; 
+    }
+    td { 
+        border: 1px solid blue; 
+        padding: 5px 12px; 
+        text-align: center; 
+    }
+</style>
+<table>
+<tr><th></th><th>0</th><th>1</th></tr>
+<tr><th>> A</th><td>A</td><td>B</td></tr>
+<tr><th>&emsp;B</th><td>C</td><td>B</td></tr>
+<tr><th>* C</th><td>A</td><td>B</td></tr>
+</table>
+
+<pre id=sample></pre>
+
+<hr />
+<!--p>Ref: <a href="https:xxx" 
+   target="ExternalDocument">xxx</a>
+</p-->
+
+<script>
+    title.innerText = document.title
+    sample.innerText = delta+'\n'+accept
+    test()
+</script>
+</div>
 
 
     <div class="w3-content w3-justify w3-text-black w3-padding-64" style="padding:20px;" id="NFA">
@@ -235,16 +320,169 @@
         <p>δ: Q X (∑ U ϵ ) --> 2 ^ Q.</p>
       </p>
     </div>
+
+
+    <h2 id="title">NFA and DFA for (1|0)*00</h2>
+
+    <p>Non-deterministic finite automaton</p>
+
+    w = <input id="input" type="text" value="010010100" onchange="test()">  
+    F = <input id="final" type="text" value="c" onchange="test()" style="width:30px">
+
+    <p>Deterministic finite automaton</p>
+
+    w = <input id="input2" type="text" value="010010100" onchange="test2()">  
+    F = <input id="final2" type="text" value="F" onchange="test2()" style="width:30px">
+
+    <hr>
+    <b>Non-deterministic Logic</b>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 0 50px;
+        }
+        th {
+            color: blue;
+            padding: 5px 12px;
+        }
+        td {
+            border: 1px solid blue;
+            padding: 5px 12px;
+            text-align: center;
+        }
+    </style>
+    <table>
+        <tbody><tr>
+            <th></th>
+            <th>0</th>
+            <th>1</th>
+        </tr>
+        <tr>
+            <th>&gt; a</th>
+            <td>ab</td>
+            <td>a</td>
+        </tr>
+        <tr>
+            <th> b</th>
+            <td>c</td>
+            <td>ϕ</td>
+        </tr>
+        <tr>
+            <th>* c</th>
+            <td>ϕ</td>
+            <td>ϕ</td>
+        </tr>
+    </tbody></table>
+    <hr>
+    <b>Deterministic Logic</b>
+    <table>
+        <tbody><tr>
+            <th></th>
+            <th>0</th>
+            <th>1</th>
+        </tr>
+        <tr>
+            <th>&gt; D</th>
+            <td>E</td>
+            <td>D</td>
+        </tr>
+        <tr>
+            <th> E</th>
+            <td>F</td>
+            <td>D</td>
+        </tr>
+        <tr>
+            <th>* F</th>
+            <td>F</td>
+            <td>D</td>
+        </tr>
+    </tbody></table>
+    <hr>
+    <pre id="sample">Non-deterministic Methods<br><br>function delta(q, c) { // (1|0)*00<br>            if (q == 'a' &amp;&amp; c == '0') return 'ab'<br>            if (q == 'a' &amp;&amp; c == '1') return 'a'<br>            if (q == 'b' &amp;&amp; c == '0') return 'c'<br>            return '';  //default -- no transition<br>        }<br>function accept(w, F = 'c', Q = 'a') {<br>            //w: input String<br>            //F: final state(s)<br>            //Q: current state(s)<br>            let i = 0, txt = Q<br>            while (i &lt; w.length) {<br>                let c = w[i], T = ''<br>                for (let q of Q)<br>                    T = union(T, delta(q, c))<br>                Q = T<br>                if (Q == '') break<br>                i++; txt += ", " + c + " -&gt; " + Q + '\n' + Q<br>            }<br>            input.selectionStart = i<br>            input.selectionEnd = i + 1<br>            return intersect(Q, F).length &gt; 0<br>        }<br><br>Deterministic Methods<br><br>function delta2(q, c) { // (1|0)*10<br>            if (q == 'D' &amp;&amp; c == '0') return 'E'<br>            if (q == 'E' &amp;&amp; c == '0') return 'F'<br>            if (q == 'F' &amp;&amp; c == '0') return 'F'<br>            if (c == '1') return 'D'<br>            return '';  //default -- no transition<br>        }<br>function accept2(w, F = 'F', q = 'D') {<br>            //w: input String<br>            //F: final state(s)<br>            //q: current state<br>            let i = 0, txt = q<br>            while (i &lt; w.length) {<br>                q = delta2(q, w[i])<br>                if (q == '') break<br>                i++; txt += " -&gt; " + q<br>            }<br>            input.selectionStart = i<br>            input.selectionEnd = i + 1<br>            return (q != '' &amp;&amp; F.includes(q))<br>        }</pre>
+
+    <hr>
+
+    <script>
+        "use strict";
+        title.innerText = document.title
+        sample.innerText = 'Non-deterministic Methods\n\n'+delta+ '\n' + accept + '\n\n' +'Deterministic Methods\n\n' + delta2 + '\n' + accept2
+        function union(a, b) { //set operation using strings
+            let s = a
+            for (let x of b) if (!a.includes(x)) s += x
+            return s
+        }
+        function intersect(a, b) {
+            let s = ''
+            for (let x of b) if (a.includes(x)) s += x
+            return s
+        }
+        function delta(q, c) { // (1|0)*00
+            if (q == 'a' && c == '0') return 'ab'
+            if (q == 'a' && c == '1') return 'a'
+            if (q == 'b' && c == '0') return 'c'
+            return '';  //default -- no transition
+        }
+        function accept(w, F = 'c', Q = 'a') {
+            //w: input String
+            //F: final state(s)
+            //Q: current state(s)
+            let i = 0, txt = Q
+            while (i < w.length) {
+                let c = w[i], T = ''
+                for (let q of Q)
+                    T = union(T, delta(q, c))
+                Q = T
+                if (Q == '') break
+                i++; txt += ", " + c + " -> " + Q + '\n' + Q
+            }
+            input.selectionStart = i
+            input.selectionEnd = i + 1
+            return intersect(Q, F).length > 0
+        }
+        function test() {
+            let s = accept(input.value, final.value);
+            console.log(s);
+        }
+        //Deterministic
+        function delta2(q, c) { // (1|0)*10
+            if (q == 'D' && c == '0') return 'E'
+            if (q == 'E' && c == '0') return 'F'
+            if (q == 'F' && c == '0') return 'F'
+            if (c == '1') return 'D'
+            return '';  //default -- no transition
+        }
+        function accept2(w, F = 'F', q = 'D') {
+            //w: input String
+            //F: final state(s)
+            //q: current state
+            let i = 0, txt = q
+            while (i < w.length) {
+                q = delta2(q, w[i])
+                if (q == '') break
+                i++; txt += " -> " + q
+            }
+            input.selectionStart = i
+            input.selectionEnd = i + 1
+            return (q != '' && F.includes(q))
+        }
+        function test2() {
+            let w = input2.value, s = "  "
+            for (let c of w) s += c + "    "
+            s += '\n' + accept2(w, final2.value)
+            console.log(s);
+        }
+        test();
+        test2();
+    </script>
+
+
+
   </div>
-<center>
 
-
-
-
-</center>
 
 <div class="w3-content w3-justify w3-text-black w3-padding-64" style="padding:20px;" id="NFATODFA">
-  <h2 id="nf" class="w3-text-light-black">Convert NFA to DFA</h2>
+  <h2 id="nf" class="w3-text-light-black">Conversion NFA to DFA</h2>
   <hr>
   <p>Suppose there is an NFA N < Q, ∑, q0, δ, F > which recognizes a language L. Then the DFA D < Q’, ∑, q0, δ’, F’ > can be constructed for language L as:
     <p>Step 1: Initially Q’ = ɸ.</p>
@@ -321,10 +559,15 @@
               <img src="nfatofdfa_Figure4.png" alt="figure4">
         
             </div>
-    
-
+            
   </script>
-
+  <div class="footer">
+      <p>References:</p>
+      <a href="https://www.github.com/maeyler">M. Akif Eyler</a><br>
+      <a href="https://www.geeksforgeeks.org/theory-of-computation-conversion-from-nfa-to-dfa/">Geeksforgeeks</a><br>
+      <a href="https://www.w3schools.com/w3css/w3css_templates.asp">W3schools</a><br>
+  <p>Atahan ATA @2019</p>
+  </div>
 </body>
 
 </html>
